@@ -5,6 +5,7 @@ import React, { useContext, useState, useEffect } from "react";
 import CartItem from "../components/CartItem";
 import Link from "next/link";
 import { getData } from "../utils/fetchData";
+import PaypalBtn from "../components/paypalBtn";
 
 const Cart = () => {
 	const { state, dispatch } = useContext(DataContext);
@@ -14,6 +15,7 @@ const Cart = () => {
 	const [total, setTotal] = useState(0);
 	const [address, setAddress] = useState("");
 	const [mobile, setMobile] = useState("");
+	const [payment, setPayment] = useState(false);
 
 	//get total price
 	useEffect(() => {
@@ -35,7 +37,7 @@ const Cart = () => {
 			const updateCart = async () => {
 				for (const item of cartLocal) {
 					const res = await getData(`product/${item._id}`);
-					const { _id, title, images, price, inStock } = res.product;
+					const { _id, title, images, price, inStock, sold } = res.product;
 					if (inStock > 0) {
 						newArr.push({
 							_id,
@@ -43,6 +45,7 @@ const Cart = () => {
 							images,
 							price,
 							inStock,
+							sold,
 							quantity: item.quantity > inStock ? 1 : item.quantity,
 						});
 					}
@@ -52,6 +55,15 @@ const Cart = () => {
 			updateCart();
 		}
 	}, []);
+
+	const handlePayment = () => {
+		if (!address || !mobile)
+			return dispatch({
+				type: "NOTIFY",
+				payload: { error: "Please add you address and mobile." },
+			});
+		setPayment(true);
+	};
 
 	if (cart.length === 0) {
 		return (
@@ -93,7 +105,7 @@ const Cart = () => {
 						id="address"
 						className="form-control mb-2"
 						value={address}
-						onChange={() => setAddress(e.target.value)}
+						onChange={(e) => setAddress(e.target.value)}
 					/>
 					<label htmlFor="mobile">Mobile</label>
 					<input
@@ -102,16 +114,29 @@ const Cart = () => {
 						id="mobile"
 						className="form-control mb-2"
 						value={mobile}
-						onChange={() => setMobile(e.target.value)}
+						onChange={(e) => setMobile(e.target.value)}
 					/>
 				</form>
 				<h3>
 					Total: <span className="text-danger">${total}</span>
 				</h3>
 
-				<Link href={auth.user ? "#" : "/signin"}>
-					<a className="btn btn-dark">Proceed with payment</a>
-				</Link>
+				{payment ? (
+					<PaypalBtn
+						total={total}
+						mobile={mobile}
+						address={address}
+						state={state}
+						dispatch={dispatch}
+					/>
+				) : (
+					<Link href={auth.user ? "#!" : "/signin"}>
+						<a className="btn btn-dark" onClick={handlePayment}>
+							Proceed with payment
+						</a>
+					</Link>
+				)}
+
 				<Link href="/wallet">
 					<a className="btn btn-dark my-2">Connect Wallet</a>
 				</Link>

@@ -1,16 +1,13 @@
 import connectDB from "../../../utils/connectDB";
 import Users from "../../../models/userModel";
-import {
-	createAccessToken,
-	createRefreshToken,
-} from "../../../utils/generateToken";
+import { createAccessToken } from "../../../utils/generateToken";
 import jwt from "jsonwebtoken";
 
 connectDB();
 
 const accessToken = async (req, res) => {
 	try {
-		const rf_token = req.cookies.refreshToken;
+		const rf_token = req.cookies.refreshtoken;
 		if (!rf_token) return res.status(400).json({ err: "Please login now!" });
 		const result = jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET);
 		if (!result)

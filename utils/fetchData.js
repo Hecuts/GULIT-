@@ -23,7 +23,6 @@ export const postData = async (url, post, token) => {
 		}),
 		body: JSON.stringify(post),
 	});
-	console.log("here: ", res);
 	const data = await res.json();
 	return data;
 };

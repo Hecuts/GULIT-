@@ -13,7 +13,6 @@ const MyApp = ({ Component, pageProps }) => {
 	return (
 		<DataProvider>
 			<Layout>
-				<Script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD" />
 				<Component {...pageProps} />
 			</Layout>
 		</DataProvider>
