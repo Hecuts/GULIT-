@@ -4,18 +4,21 @@ import { DataContext } from "../store/GlobalState";
 import React, { useContext, useState, useEffect } from "react";
 import CartItem from "../components/CartItem";
 import Link from "next/link";
-import { getData } from "../utils/fetchData";
-import PaypalBtn from "../components/paypalBtn";
+import { getData, postData } from "../utils/fetchData";
+import { useRouter } from "next/router";
 
 const Cart = () => {
 	const { state, dispatch } = useContext(DataContext);
-	const { cart, auth } = state;
+	const { cart, auth, orders } = state;
 
 	//Handle the total checkout
 	const [total, setTotal] = useState(0);
+
 	const [address, setAddress] = useState("");
 	const [mobile, setMobile] = useState("");
-	const [payment, setPayment] = useState(false);
+
+	const [callback, setCallback] = useState(false);
+	const router = useRouter();
 
 	//get total price
 	useEffect(() => {
@@ -27,7 +30,7 @@ const Cart = () => {
 			setTotal(res);
 		};
 		getTotal();
-	});
+	}, [cart]);
 
 	useEffect(() => {
 		const cartLocal = JSON.parse(localStorage.getItem("_next_cart01_gulit"));
@@ -54,15 +57,58 @@ const Cart = () => {
 			};
 			updateCart();
 		}
-	}, []);
+	}, [callback]);
 
-	const handlePayment = () => {
+	const handlePayment = async () => {
 		if (!address || !mobile)
 			return dispatch({
 				type: "NOTIFY",
 				payload: { error: "Please add you address and mobile." },
 			});
-		setPayment(true);
+
+		let newCart = [];
+		for (const item of cart) {
+			const res = await getData(`product/${item._id}`);
+			if (res.product.inStock - item.quantity >= 0) {
+				newCart.push(item);
+			}
+		}
+
+		if (newCart.length < cart.length) {
+			setCallback(!callback);
+			return dispatch({
+				type: "NOTIFY",
+				payload: { error: "Product out of stock or insufficient quantity" },
+			});
+		}
+
+		dispatch({ type: "NOTIFY", payload: { loading: true } });
+
+		postData("order", { address, mobile, cart, total }, auth.token).then(
+			(res) => {
+				if (res.err)
+					return dispatch({
+						type: "NOTIFY",
+						payload: { error: res.err },
+					});
+
+				//ADD_CART
+				dispatch({ type: "ADD_CART", payload: [] });
+
+				const newOrder = { ...res.newOrder, user: auth.user };
+				//ADD_ORDERS
+				dispatch({
+					type: "ADD_ORDERS",
+					paylod: [...orders, newOrder],
+				});
+
+				dispatch({
+					type: "NOTIFY",
+					payload: { success: res.msg },
+				});
+				return router.push(`/order/${res.newOrder._id}`);
+			}
+		);
 	};
 
 	if (cart.length === 0) {
@@ -121,21 +167,11 @@ const Cart = () => {
 					Total: <span className="text-danger">${total}</span>
 				</h3>
 
-				{payment ? (
-					<PaypalBtn
-						total={total}
-						mobile={mobile}
-						address={address}
-						state={state}
-						dispatch={dispatch}
-					/>
-				) : (
-					<Link href={auth.user ? "#!" : "/signin"}>
-						<a className="btn btn-dark" onClick={handlePayment}>
-							Proceed with payment
-						</a>
-					</Link>
-				)}
+				<Link href={auth.user ? "#!" : "/signin"}>
+					<a className="btn btn-dark" onClick={handlePayment}>
+						Proceed with payment
+					</a>
+				</Link>
 
 				<Link href="/wallet">
 					<a className="btn btn-dark my-2">Connect Wallet</a>

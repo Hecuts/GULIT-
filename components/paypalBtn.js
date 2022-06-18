@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from "react";
-import { postData } from "../utils/fetchData";
+import React, { useEffect, useRef, useContext } from "react";
+import { patchData } from "../utils/fetchData";
+import { DataContext } from "../store/GlobalState";
+import { updateItem } from "../store/Actions";
 
-const PaypalBtn = ({ total, address, mobile, state, dispatch }) => {
+const PaypalBtn = ({ order }) => {
+	const { state, dispatch } = useContext(DataContext);
 	const refPaypalBtn = useRef();
-	const { cart, auth } = state;
+	const { auth, orders } = state;
 
 	useEffect(() => {
 		paypal
@@ -14,7 +17,7 @@ const PaypalBtn = ({ total, address, mobile, state, dispatch }) => {
 						purchase_units: [
 							{
 								amount: {
-									value: total, // Can also reference a variable or function
+									value: order.total, // Can also reference a variable or function
 								},
 							},
 						],
@@ -23,11 +26,14 @@ const PaypalBtn = ({ total, address, mobile, state, dispatch }) => {
 				// Finalize the transaction after payer approval
 				onApprove: (data, actions) => {
 					dispatch({ type: "NOTIFY", payload: { loading: true } });
+
 					return actions.order.capture().then(function (orderData) {
 						// Successful capture! For dev/demo purposes:
-						postData(
-							"order",
-							{ address, mobile, cart, total },
+						patchData(
+							`order/payment/${order._id}`,
+							{
+								paymentId: orderData.payer.payer_id,
+							},
 							auth.token
 						).then((res) => {
 							if (res.err)
@@ -35,23 +41,37 @@ const PaypalBtn = ({ total, address, mobile, state, dispatch }) => {
 									type: "NOTIFY",
 									payload: { error: res.err },
 								});
-							dispatch({ type: "ADD_CART", payload: [] });
+
+							dispatch(
+								updateItem(
+									orders,
+									order._id,
+									{
+										...order,
+										paid: true,
+										dateOfPayment: orderData.create_time,
+										paymentId: orderData.payer.payer_id,
+										method: "Paypal",
+									},
+									"ADD_ORDERS"
+								)
+							);
 							return dispatch({
 								type: "NOTIFY",
 								payload: { success: res.msg },
 							});
 						});
 
-						console.log(
-							"Capture result",
-							orderData,
-							JSON.stringify(orderData, null, 2)
-						);
-						const transaction =
-							orderData.purchase_units[0].payments.captures[0];
-						alert(
-							`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`
-						);
+						// console.log(
+						// 	"Capture result",
+						// 	orderData,
+						// 	JSON.stringify(orderData, null, 2)
+						// );
+						// const transaction =
+						// 	orderData.purchase_units[0].payments.captures[0];
+						// alert(
+						// 	`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`
+						// );
 						// When ready to go live, remove the alert and show a success message within this page. For example:
 						// const element = document.getElementById('paypal-button-container');
 						// element.innerHTML = '<h3>Thank you for your payment!</h3>';

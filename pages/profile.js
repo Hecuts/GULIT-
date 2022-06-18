@@ -5,6 +5,7 @@ import { useContext, useState, useEffect } from "react";
 import valid from "../utils/valid";
 import { patchData } from "../utils/fetchData";
 import { imageUpload } from "../utils/imageUpload";
+import Link from "next/link";
 
 const Profile = () => {
 	const initialState = {
@@ -17,7 +18,7 @@ const Profile = () => {
 	const { avatar, name, password, cf_password } = data;
 
 	const { state, dispatch } = useContext(DataContext);
-	const { auth, notify } = state;
+	const { auth, notify, orders } = state;
 
 	useEffect(() => {
 		if (auth.user) setData({ ...data, name: auth.user.name });
@@ -186,8 +187,53 @@ const Profile = () => {
 						Update
 					</button>
 				</div>
-				<div className="col-md-8">
-					<h3>Orders</h3>
+				<div className="col-md-8 table-responsive">
+					<h3 className="text-uppercase">Orders</h3>
+					<div className="my-3">
+						<table
+							className="table-bordered table-hover w-100 text-uppercase"
+							style={{ minWidth: "600px", cursor: "pointer" }}
+						>
+							<thead className="bg-light fw-bold ">
+								<tr>
+									<td className="p-2">id</td>
+									<td className="p-2">data</td>
+									<td className="p-2">total</td>
+									<td className="p-2">delivered</td>
+									<td className="p-2">paid</td>
+								</tr>
+							</thead>
+							<tbody>
+								{orders.map((order) => (
+									<tr key={order._id}>
+										<td className="p-2">
+											<Link href={`/order/${order._id}`}>
+												<a>{order._id}</a>
+											</Link>
+										</td>
+										<td className="p-2">
+											{new Date(order.createdAt).toLocaleDateString()}
+										</td>
+										<td className="p-2">${order.total}</td>
+										<td className="p-2">
+											{order.delivered ? (
+												<i className="fas fa-check text-success"></i>
+											) : (
+												<i className="fas fa-times text-danger"></i>
+											)}
+										</td>
+										<td className="p-2">
+											{order.paid ? (
+												<i className="fas fa-check text-success"></i>
+											) : (
+												<i className="fas fa-times text-danger"></i>
+											)}
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</section>
 		</div>

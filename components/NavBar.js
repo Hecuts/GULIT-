@@ -27,6 +27,23 @@ const NavBar = () => {
 			type: "NOTIFY",
 			payload: { success: "Logged out successful!" },
 		});
+		return router.push("/");
+	};
+
+	const adminRouter = () => {
+		return (
+			<>
+				<Link href="/users">
+					<a className="dropdown-item">Users</a>
+				</Link>
+				<Link href="/products">
+					<a className="dropdown-item">Products</a>
+				</Link>
+				<Link href="/categories">
+					<a className="dropdown-item">Categories</a>
+				</Link>
+			</>
+		);
 	};
 
 	const loggedRouter = () => {
@@ -54,18 +71,16 @@ const NavBar = () => {
 					{auth.user.name}
 				</a>
 
-				<ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<li>
-						<Link href="/profile">
-							<a className="dropdown-item">Profile</a>
-						</Link>
-					</li>
-					<li>
-						<button className="dropdown-item" onClick={handleLogout}>
-							Log out
-						</button>
-					</li>
-				</ul>
+				<div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<Link href="/profile">
+						<a className="dropdown-item">Profile</a>
+					</Link>
+					{auth.user.role === "admin" && adminRouter()}
+					<div className="dropdown-divider"></div>
+					<button className="dropdown-item" onClick={handleLogout}>
+						Log out
+					</button>
+				</div>
 			</li>
 		);
 	};
