@@ -5,6 +5,7 @@ export const ACTIONS = {
 	MODAL: "MODAL",
 	ADD_ORDERS: "ADD_ORDERS",
 	ADD_USERS: "ADD_USERS",
+	ADD_CATEGORIES: "ADD_CATEGORIES",
 };
 
 export const addToCart = (product, cart) => {

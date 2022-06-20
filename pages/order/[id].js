@@ -15,7 +15,7 @@ const DetailOrder = () => {
 	useEffect(() => {
 		const newArr = orders.filter((order) => order._id === router.query.id);
 		setOrderDetail(newArr);
-	}, [orders]);
+	}, [orders, router.query.id]);
 
 	if (!auth.user) return null;
 	return (

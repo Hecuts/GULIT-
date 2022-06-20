@@ -20,6 +20,15 @@ img {
   object-position: 0 30%;
 }
 
+#formFile::before {
+  content: "Photos";
+  position: absolute;
+  z-index: 2;
+  display: block;
+  background-color: #eee;
+  width: 90px;
+}
+
 /* --------------------Loading ---------------------- */
 @import url("./loading.css");
 
@@ -28,3 +37,6 @@ img {
 
 /* --------------------profile ----------------------- */
 @import url('./profile.css');
+
+/* --------------------product manager ----------------------- */
+@import url('./products_manager.css');

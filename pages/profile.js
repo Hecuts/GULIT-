@@ -70,7 +70,7 @@ const Profile = () => {
 		if (file.type !== "image/jpeg" && file.type !== "image/png")
 			return dispatch({
 				type: "NOTIFY",
-				payload: { error: "Incorrent image format!" },
+				payload: { error: "Incorrect image format!" },
 			});
 		setData({ ...data, avatar: file });
 	};

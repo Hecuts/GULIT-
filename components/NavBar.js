@@ -36,7 +36,7 @@ const NavBar = () => {
 				<Link href="/users">
 					<a className="dropdown-item">Users</a>
 				</Link>
-				<Link href="/products">
+				<Link href="/create">
 					<a className="dropdown-item">Products</a>
 				</Link>
 				<Link href="/categories">

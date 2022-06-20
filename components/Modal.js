@@ -9,6 +9,7 @@ const Modal = () => {
 
 	//Delete user, and Delete item, depending on the modal type.
 	const handleSubmit = () => {
+		//delete users
 		if (modal.type === "ADD_USERS") {
 			deleteData(`user/${modal.id}`, auth.token).then((res) => {
 				if (res.err)
@@ -16,6 +17,15 @@ const Modal = () => {
 				return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
 			});
 		}
+		//delete categories
+		if (modal.type === "ADD_CATEGORIES") {
+			deleteData(`categories/${modal.id}`, auth.token).then((res) => {
+				if (res.err)
+					return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+				return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
+			});
+		}
+		//delete item
 		dispatch(deleteItem(modal.data, modal.id, modal.type));
 		dispatch({ type: "MODAL", payload: [] });
 	};
