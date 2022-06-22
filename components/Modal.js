@@ -7,27 +7,51 @@ const Modal = () => {
 	const { state, dispatch } = useContext(DataContext);
 	const { modal, auth } = state;
 
+	const deleteUser = (item) => {
+		dispatch(deleteItem(item.data, item.id, item.type));
+		deleteData(`user/${item.id}`, auth.token).then((res) => {
+			if (res.err)
+				return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+			return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
+		});
+	};
+
+	const deleteCategories = (item) => {
+		dispatch(deleteItem(item.data, item.id, item.type));
+		deleteData(`categories/${item.id}`, auth.token).then((res) => {
+			if (res.err)
+				return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+			return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
+		});
+	};
+
+	const deleteProducts = (item) => {
+		dispatch({ type: "NOTIFY", payload: { loading: true } });
+
+		deleteData(`product/${item.id}`, auth.token).then((res) => {
+			if (res.err)
+				return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+			return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
+		});
+	};
+
 	//Delete user, and Delete item, depending on the modal type.
 	const handleSubmit = () => {
-		//delete users
-		if (modal.type === "ADD_USERS") {
-			deleteData(`user/${modal.id}`, auth.token).then((res) => {
-				if (res.err)
-					return dispatch({ type: "NOTIFY", payload: { error: res.err } });
-				return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
-			});
+		if (modal.length !== 0) {
+			for (const item of modal) {
+				//delete users
+				if (item.type === "ADD_USERS") deleteUser(item);
+
+				//delete categories
+				if (item.type === "ADD_CATEGORIES") deleteCategories(item);
+
+				//delete products
+				if (item.type === "DELETE_PRODUCTS") deleteProducts(item);
+
+				// dispatch(deleteItem(modal.data, modal.id, modal.type));
+				dispatch({ type: "MODAL", payload: [] });
+			}
 		}
-		//delete categories
-		if (modal.type === "ADD_CATEGORIES") {
-			deleteData(`categories/${modal.id}`, auth.token).then((res) => {
-				if (res.err)
-					return dispatch({ type: "NOTIFY", payload: { error: res.err } });
-				return dispatch({ type: "NOTIFY", payload: { success: res.msg } });
-			});
-		}
-		//delete item
-		dispatch(deleteItem(modal.data, modal.id, modal.type));
-		dispatch({ type: "MODAL", payload: [] });
 	};
 
 	return (
@@ -42,7 +66,7 @@ const Modal = () => {
 				<div className="modal-content">
 					<div className="modal-header">
 						<h5 className="modal-title text-capitalize" id="deleteModalLabel">
-							{modal.title}
+							{modal.length !== 0 && modal[0].title}
 						</h5>
 						<button
 							type="button"

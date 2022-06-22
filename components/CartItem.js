@@ -59,12 +59,14 @@ const CartItem = ({ item, dispatch, cart }) => {
 					onClick={() =>
 						dispatch({
 							type: "MODAL",
-							payload: {
-								data: cart,
-								id: item._id,
-								title: item.title,
-								type: "ADD_CART",
-							},
+							payload: [
+								{
+									data: cart,
+									id: item._id,
+									title: item.title,
+									type: "ADD_CART",
+								},
+							],
 						})
 					}
 					style={{ fontSize: "18px" }}

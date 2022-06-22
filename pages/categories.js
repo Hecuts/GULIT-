@@ -101,12 +101,14 @@ const Categories = () => {
 								onClick={() =>
 									dispatch({
 										type: "MODAL",
-										payload: {
-											data: categories,
-											id: category._id,
-											title: category.name,
-											type: "ADD_CATEGORIES",
-										},
+										payload: [
+											{
+												data: categories,
+												id: category._id,
+												title: category.name,
+												type: "ADD_CATEGORIES",
+											},
+										],
 									})
 								}
 							/>
