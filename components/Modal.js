@@ -39,6 +39,10 @@ const Modal = () => {
 	const handleSubmit = () => {
 		if (modal.length !== 0) {
 			for (const item of modal) {
+				//delete cart item
+
+				if (item.type === "ADD_CART")
+					dispatch(deleteItem(item.data, item.id, item.type));
 				//delete users
 				if (item.type === "ADD_USERS") deleteUser(item);
 
@@ -48,7 +52,6 @@ const Modal = () => {
 				//delete products
 				if (item.type === "DELETE_PRODUCTS") deleteProducts(item);
 
-				// dispatch(deleteItem(modal.data, modal.id, modal.type));
 				dispatch({ type: "MODAL", payload: [] });
 			}
 		}

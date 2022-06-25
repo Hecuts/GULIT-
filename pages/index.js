@@ -1,14 +1,31 @@
 import { getData } from "../utils/fetchData";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import ProductItem from "../components/products/productItem";
 import { DataContext } from "../store/GlobalState";
+import filterSearch from "../utils/filterSearch";
+import { useRouter } from "next/router";
 
-const Home = ({ products }) => {
+const Home = ({ products, result }) => {
 	const { state, dispatch } = useContext(DataContext);
 	const { auth } = state;
 	const [product, setProduct] = useState(products);
 	const [isChecked, setIsChecked] = useState(false);
+	const [page, setPage] = useState(1);
+	const router = useRouter();
+
+	//Take effect immediately after <load more> button is clicked.
+	useEffect(() => {
+		setProduct(products);
+	}, [products]);
+
+	useEffect(() => {
+		if (Object.keys(router.query).length === 0) {
+			setPage(1);
+		} else {
+			setPage(Number(router.query.page));
+		}
+	}, [router.query]);
 
 	const handleChecked = (id) => {
 		products.forEach((product) => {
@@ -41,6 +58,10 @@ const Home = ({ products }) => {
 		dispatch({ type: "MODAL", payload: deleteArray });
 	};
 
+	const handleLoadmore = () => {
+		setPage(page + 1);
+		filterSearch({ router, page: page + 1 });
+	};
 	return (
 		<div>
 			<Head>
@@ -85,13 +106,36 @@ const Home = ({ products }) => {
 					))
 				)}
 			</div>
+			{result < page * 6 ? (
+				""
+			) : (
+				<button
+					className="btn btn-outline-secondary d-block mx-auto mb-4"
+					onClick={handleLoadmore}
+				>
+					Load More
+				</button>
+			)}
 		</div>
 	);
 };
 export default Home;
 
-export const getServerSideProps = async () => {
-	const res = await getData("product");
+export const getServerSideProps = async ({ query }) => {
+	const page = query.page || 1;
+	const category = query.category || "all";
+	const sort = query.sort || "";
+	const search = query.search || "all";
+
+	console.log(page);
+
+	const res = await getData(
+		`product?limit=${
+			page * 6
+		}&category=${category}&sort=${sort}&title=${search}`
+	);
+
+	// server side rendering
 	return {
 		props: {
 			products: res.products,
