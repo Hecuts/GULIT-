@@ -86,12 +86,14 @@ const Users = () => {
 										onClick={() =>
 											dispatch({
 												type: "MODAL",
-												payload: {
-													data: users,
-													id: user._id,
-													title: user.name,
-													type: "ADD_USERS",
-												},
+												payload: [
+													{
+														data: users,
+														id: user._id,
+														title: user.name,
+														type: "ADD_USERS",
+													},
+												],
 											})
 										}
 									></i>

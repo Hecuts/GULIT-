@@ -1,6 +1,7 @@
 import connectDB from "../../../utils/connectDB";
 import Categories from "../../../models/categoriesModel";
 import auth from "../../../middleware/auth";
+import Products from "../../../models/productModel";
 
 connectDB();
 
@@ -44,7 +45,17 @@ const deleteCategories = async (req, res) => {
 			return res.status(400).json({ err: "Authentication is not valid." });
 
 		const { id } = req.query;
+
+		//Check if the category has no products left.
+		const products = await Products.findOne({ category: id });
+		if (products)
+			return res
+				.status(400)
+				.json({ err: "Please delete all products with relation." });
+
+		//Delete the category
 		await Categories.findByIdAndDelete(id);
+
 		res.json({ msg: "Success! Category deleted." });
 	} catch (err) {
 		return res.status(500).json({ err: err.message });

@@ -64,7 +64,11 @@ const ProductsManager = () => {
 			if (file.size > 1024 * 1024 * 5)
 				return (err = "Maximum file size is 5mb.");
 
-			if (file.type !== "image/jpeg" && file.type !== "image/png")
+			if (
+				file.type !== "image/jpeg" &&
+				file.type !== "image/png" &&
+				file.type !== "image/webp"
+			)
 				return (err = "File type is incorrect.");
 
 			num += 1;

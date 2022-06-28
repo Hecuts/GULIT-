@@ -3,8 +3,9 @@ import React, { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import ProductItem from "../components/products/productItem";
 import { DataContext } from "../store/GlobalState";
-import filterSearch from "../utils/filterSearch";
 import { useRouter } from "next/router";
+import filterSearch from "../utils/filterSearch";
+import Filter from "../components/Filter";
 
 const Home = ({ products, result }) => {
 	const { state, dispatch } = useContext(DataContext);
@@ -22,8 +23,6 @@ const Home = ({ products, result }) => {
 	useEffect(() => {
 		if (Object.keys(router.query).length === 0) {
 			setPage(1);
-		} else {
-			setPage(Number(router.query.page));
 		}
 	}, [router.query]);
 
@@ -67,6 +66,9 @@ const Home = ({ products, result }) => {
 			<Head>
 				<title>Home page</title>
 			</Head>
+
+			<Filter state={state} />
+
 			{auth.user && auth.user.role === "admin" && products.length !== 0 && (
 				<div
 					className="delete_all btn btn-danger mt-4"
@@ -126,8 +128,6 @@ export const getServerSideProps = async ({ query }) => {
 	const category = query.category || "all";
 	const sort = query.sort || "";
 	const search = query.search || "all";
-
-	console.log(page);
 
 	const res = await getData(
 		`product?limit=${
