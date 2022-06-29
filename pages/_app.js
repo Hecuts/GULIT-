@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { DataProvider } from "../store/GlobalState";
-import Script from "next/script";
 
 const MyApp = ({ Component, pageProps }) => {
 	useEffect(() => {

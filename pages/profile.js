@@ -110,7 +110,7 @@ const Profile = () => {
 			<Head>
 				<title>Profile Page</title>
 			</Head>
-			<section className="row text-secondary my-3">
+			<section className="row text-secondary my-3 mx-2">
 				<div className="col-md-4">
 					<h3 className="text-center text-uppercase">
 						{auth.user.role == "user" ? "User Profile" : "Admin Profile"}
@@ -145,7 +145,7 @@ const Profile = () => {
 						/>
 					</div>
 
-					<div className="form-group">
+					<div className="form-group my-1">
 						<label htmlFor="email">Email</label>
 						<input
 							type="text"
@@ -156,7 +156,7 @@ const Profile = () => {
 						/>
 					</div>
 
-					<div className="form-group">
+					<div className="form-group my-1">
 						<label htmlFor="password">New Password</label>
 						<input
 							type="password"
@@ -168,7 +168,7 @@ const Profile = () => {
 						/>
 					</div>
 
-					<div className="form-group">
+					<div className="form-group my-1">
 						<label htmlFor="cf_password">Confirm Password</label>
 						<input
 							type="password"

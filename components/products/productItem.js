@@ -12,14 +12,17 @@ const ProductItem = ({ product, handleChecked }) => {
 		return (
 			<>
 				<Link href={`product/${product._id}`}>
-					<a className="btn btn-info" style={{ marginRight: "5px", flex: 1 }}>
+					<a
+						className="btn btn-info"
+						style={{ marginRight: "5px", flex: 1, background: "#1ed760" }}
+					>
 						View
 					</a>
 				</Link>
 				<button
-					className="btn btn-success"
+					className="btn"
 					disabled={product.inStock === 0 ? true : false}
-					style={{ marginLeft: "5px", flex: 1 }}
+					style={{ marginLeft: "5px", flex: 1, background: "#f08804" }}
 					onClick={() => dispatch(addToCart(product, cart))}
 				>
 					BUY

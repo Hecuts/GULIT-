@@ -48,7 +48,7 @@ const NavBar = () => {
 
 	const loggedRouter = () => {
 		return (
-			<li className="nav-item dropdown">
+			<li className="nav-item dropdown mx-2 ">
 				<a
 					className="nav-link dropdown-toggle"
 					href="#"
@@ -56,6 +56,7 @@ const NavBar = () => {
 					role="button"
 					data-bs-toggle="dropdown"
 					aria-expanded="false"
+					style={{ color: "white" }}
 				>
 					<img
 						src={auth.user.avatar}
@@ -86,7 +87,7 @@ const NavBar = () => {
 	};
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-light bg-light">
+		<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div className="container-fluid">
 				<Link href="/">
 					<a className="navbar-brand">GulIT</a>
@@ -112,16 +113,18 @@ const NavBar = () => {
 								<a
 									className={"nav-link" + isActive("/cart")}
 									aria-current="page"
+									style={{ color: "white" }}
 								>
 									<i
 										className="fas fa-shopping-cart position-relative me-2"
 										aria-hidden="true"
+										style={{ color: "white" }}
 									>
 										<span
 											className="position-absolute"
 											style={{
 												padding: "3x 6px",
-												background: "#ed143dc2",
+												background: "green",
 												borderRadius: "50%",
 												top: "-10px",
 												right: "-10px",
@@ -144,6 +147,7 @@ const NavBar = () => {
 									<a
 										className={"nav-link" + isActive("/signin")}
 										aria-current="page"
+										style={{ color: "white" }}
 									>
 										Signin
 									</a>

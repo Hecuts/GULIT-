@@ -5,7 +5,7 @@ import Modal from "./Modal";
 
 const Layout = ({ children }) => {
 	return (
-		<div className="container">
+		<div className="">
 			<NavBar />
 			<Notify />
 			<Modal />

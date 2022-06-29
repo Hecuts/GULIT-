@@ -40,3 +40,5 @@ img {
 
 /* --------------------product manager ----------------------- */
 @import url('./products_manager.css');
+
+@import url('./homePage.css');

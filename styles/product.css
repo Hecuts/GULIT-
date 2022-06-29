@@ -2,13 +2,13 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
     justify-content: center;
-    margin: 20px 0;
+    margin: 20px 30px;
 }
 .products .card{
     margin: 10px auto;
 }
 .products .card-img-top{
-    height: 250px;
+    height: 200px;
     width: 100%;
 }
 .products .card-title{

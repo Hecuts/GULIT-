@@ -62,7 +62,7 @@ const Home = ({ products, result }) => {
 		filterSearch({ router, page: page + 1 });
 	};
 	return (
-		<div>
+		<div className="home_page">
 			<Head>
 				<title>Home page</title>
 			</Head>
@@ -71,7 +71,7 @@ const Home = ({ products, result }) => {
 
 			{auth.user && auth.user.role === "admin" && products.length !== 0 && (
 				<div
-					className="delete_all btn btn-danger mt-4"
+					className="delete_all btn btn-danger mt-4 ms-2"
 					style={{ marginBottom: "-10px" }}
 				>
 					<input
