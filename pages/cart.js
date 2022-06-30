@@ -127,7 +127,7 @@ const Cart = () => {
 				<title>Cart page</title>
 			</Head>
 			<div className="col-md-8 text-secondary table-responsive my-3">
-				<h2 className="text-uppercase ">Shopping Cart</h2>
+				<h2 className="text-uppercase">Shopping Cart</h2>
 				<table className="table my-3">
 					<tbody>
 						{cart.map((item) => (
@@ -173,9 +173,9 @@ const Cart = () => {
 					</a>
 				</Link>
 
-				<Link href="/wallet">
+				{/* <Link href="/wallet">
 					<a className="btn btn-dark my-2">Connect Wallet</a>
-				</Link>
+				</Link> */}
 			</div>
 		</div>
 	);

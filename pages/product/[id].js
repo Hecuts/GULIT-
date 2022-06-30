@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import { getData } from "../../utils/fetchData";
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { DataContext } from "../../store/GlobalState";
 import { addToCart } from "../../store/Actions";
 
@@ -17,16 +17,6 @@ const DetailProduct = (props) => {
 		if (tab === index) return " active";
 		return "";
 	};
-
-	// useEffect(() => {
-	// 	const images = imgRef.current.children;
-	// 	for (let i = 0; i < images.length; i++) {
-	// 		images[i].className = images[i].className.replace(
-	// 			"active",
-	// 			"img-thumbnail rounded"
-	// 		);
-	// 	}
-	// }, [tab]);
 
 	return (
 		<div className="row detail_page">

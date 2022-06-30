@@ -18,6 +18,7 @@ const Filter = ({ state }) => {
 	const handleSort = (e) => {
 		setSort(e.target.value);
 		filterSearch({ router, sort: e.target.value });
+		console.log(router);
 	};
 
 	useEffect(() => {
@@ -48,7 +49,9 @@ const Filter = ({ state }) => {
 					className="form-control"
 					list="title_product"
 					value={search.toLowerCase()}
-					onChange={(e) => setSearch(e.target.value)}
+					onChange={(e) => {
+						setSearch(e.target.value);
+					}}
 				/>
 			</form>
 

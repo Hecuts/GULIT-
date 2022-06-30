@@ -32,7 +32,7 @@ class APIfeatures {
 			this.query.find({ category: queryObj.category });
 
 		if (queryObj.title !== "all")
-			this.query.find({ tittle: { $regex: queryObj.title } });
+			this.query.find({ title: { $regex: queryObj.title } });
 
 		this.query.find();
 		return this;
