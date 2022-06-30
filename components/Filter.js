@@ -18,7 +18,6 @@ const Filter = ({ state }) => {
 	const handleSort = (e) => {
 		setSort(e.target.value);
 		filterSearch({ router, sort: e.target.value });
-		console.log(router);
 	};
 
 	useEffect(() => {
@@ -26,8 +25,8 @@ const Filter = ({ state }) => {
 	}, [search]);
 
 	return (
-		<div className="input-group ">
-			<div className="col-md-2 px-0 mt-2">
+		<div className="input-group center-block filter">
+			<div className="col-md-2 px-0 my-2 me-1">
 				<select
 					className="form-select text-capitalize"
 					value={category}
@@ -43,11 +42,12 @@ const Filter = ({ state }) => {
 				</select>
 			</div>
 
-			<form autoComplete="off" className="mt-2 col-md-8 px-0">
+			<form autoComplete="off" className="my-2 col-md-6 px-0 me-1">
 				<input
 					type="text"
 					className="form-control"
 					list="title_product"
+					placeholder="Search products"
 					value={search.toLowerCase()}
 					onChange={(e) => {
 						setSearch(e.target.value);
@@ -55,7 +55,7 @@ const Filter = ({ state }) => {
 				/>
 			</form>
 
-			<div className="col-md-2 px-0 mt-2">
+			<div className="col-md-2 px-0 my-2">
 				<select
 					className="form-select text-capitalize"
 					value={sort}

@@ -110,11 +110,12 @@ const Profile = () => {
 			<Head>
 				<title>Profile Page</title>
 			</Head>
-			<section className="row text-secondary my-3 mx-2">
+			<section className="row text-dark my-3 mx-2">
 				<div className="col-md-4">
 					<h3 className="text-center text-uppercase">
 						{auth.user.role == "user" ? "User Profile" : "Admin Profile"}
 					</h3>
+					<hr className="mx-0 my-0" style={{ color: "#1ed760" }} />
 					<div className="avatar">
 						<img
 							src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar}
@@ -180,7 +181,7 @@ const Profile = () => {
 					</div>
 
 					<button
-						className="btn btn-info my-2"
+						className="btn btn_sec my-2"
 						disabled={notify.loading}
 						onClick={handleUpdateProfile}
 					>
@@ -188,7 +189,8 @@ const Profile = () => {
 					</button>
 				</div>
 				<div className="col-md-8 table-responsive">
-					<h3 className="text-uppercase">Orders</h3>
+					<h3 className="text-uppercase text-center ">Orders</h3>
+					<hr className="mx-0 my-0" style={{ color: "#1ed760" }} />
 					<div className="my-3">
 						<table
 							className="table-bordered table-hover w-100 text-uppercase"

@@ -4,11 +4,7 @@ const filterSearch = ({ router, page, category, sort, search }) => {
 
 	if (category) query.category = category;
 	if (page) query.page = page;
-	if (search) {
-		console.log(router.asPath);
-		console.log(path);
-		query.search = search;
-	}
+	if (search) query.search = search;
 	if (sort) query.sort = sort;
 
 	router.push({

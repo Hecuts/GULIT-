@@ -62,62 +62,64 @@ const Home = ({ products, result }) => {
 		filterSearch({ router, page: page + 1 });
 	};
 	return (
-		<div className="home_page">
+		<div>
 			<Head>
 				<title>Home page</title>
 			</Head>
 
 			<Filter state={state} />
 
-			{auth.user && auth.user.role === "admin" && products.length !== 0 && (
-				<div
-					className="delete_all btn btn-danger mt-4 ms-2"
-					style={{ marginBottom: "-10px" }}
-				>
-					<input
-						type="checkbox"
-						checked={isChecked}
-						onChange={handleCheckAll}
-						style={{
-							width: "20px",
-							height: "20px",
-							transform: "translateY(8px)",
-						}}
-					/>
-					<button
-						className="btn btn-danger ms-2"
-						data-bs-toggle="modal"
-						data-bs-target="#deleteModal"
-						onClick={handleDeleteAll}
+			<div className="home_page">
+				{auth.user && auth.user.role === "admin" && products.length !== 0 && (
+					<div
+						className="delete_all btn btn-danger mt-4 ms-2"
+						style={{ marginBottom: "-10px" }}
 					>
-						DELETE ALL
-					</button>
-				</div>
-			)}
-
-			<div className="products my-4">
-				{product.length === 0 ? (
-					<h2>No products yet.</h2>
-				) : (
-					product.map((product) => (
-						<ProductItem
-							key={product._id}
-							product={product}
-							handleChecked={handleChecked}
+						<input
+							type="checkbox"
+							checked={isChecked}
+							onChange={handleCheckAll}
+							style={{
+								width: "20px",
+								height: "20px",
+								transform: "translateY(8px)",
+							}}
 						/>
-					))
+						<button
+							className="btn btn-danger ms-2"
+							data-bs-toggle="modal"
+							data-bs-target="#deleteModal"
+							onClick={handleDeleteAll}
+						>
+							DELETE ALL
+						</button>
+					</div>
+				)}
+
+				<div className="products my-4">
+					{product.length === 0 ? (
+						<h2>No products yet.</h2>
+					) : (
+						product.map((product) => (
+							<ProductItem
+								key={product._id}
+								product={product}
+								handleChecked={handleChecked}
+							/>
+						))
+					)}
+				</div>
+				{result < page * 6 ? (
+					""
+				) : (
+					<button
+						className="btn btn-outline-secondary d-block mx-auto mb-4"
+						onClick={handleLoadmore}
+					>
+						Load More
+					</button>
 				)}
 			</div>
-			{result < page * 6 ? (
-				""
-			) : (
-				<button
-					className="btn btn-outline-secondary d-block mx-auto mb-4"
-					onClick={handleLoadmore}
-				>
-					Load More
-				</button>
-			)}
 		</div>
 	);
 };

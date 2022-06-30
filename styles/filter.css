@@ -1,3 +1,5 @@
 .filter {
-    margin: 0 20px;
+    background:#343a40;
+    display: flex;
+    align-items: center;
 }

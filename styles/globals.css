@@ -28,6 +28,33 @@ img {
   background-color: #eee;
   width: 90px;
 }
+.navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem #1ed760;
+}
+/*primary button color */
+.btn_pri {
+  background: #1ed760;
+}
+.btn_pri:hover{
+  background: #51f089;
+}
+
+/*secondary button color */
+.btn_sec {
+    background: #f08804;
+}
+.btn_sec:hover {
+    background: #f8ac4a;
+}
+.center-block {
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 /* --------------------Loading ---------------------- */
 @import url("./loading.css");
@@ -41,4 +68,8 @@ img {
 /* --------------------product manager ----------------------- */
 @import url('./products_manager.css');
 
+/* -------------------- homepage ----------------------- */
 @import url('./homePage.css');
+
+/* -------------------- filter  ----------------------- */
+@import url("./filter.css");

@@ -128,6 +128,7 @@ const Cart = () => {
 			</Head>
 			<div className="col-md-8 text-secondary table-responsive my-3">
 				<h2 className="text-uppercase">Shopping Cart</h2>
+				<hr className="mx-0 my-0" style={{ color: "#1ed760" }} />
 				<table className="table my-3">
 					<tbody>
 						{cart.map((item) => (
@@ -143,7 +144,8 @@ const Cart = () => {
 			</div>
 			<div className="col-md-4 my-3 text-end text-uppercase text-secondary ">
 				<form>
-					<h2 className="align-center">Shipping</h2>
+					<h2 className="align-center">Delivery</h2>
+					<hr className="mx-0 my-0" style={{ color: "#1ed760" }} />
 					<label htmlFor="address">Address</label>
 					<input
 						type="text"
@@ -168,7 +170,7 @@ const Cart = () => {
 				</h3>
 
 				<Link href={auth.user ? "#!" : "/signin"}>
-					<a className="btn btn-dark" onClick={handlePayment}>
+					<a className="btn btn_sec" onClick={handlePayment}>
 						Proceed with payment
 					</a>
 				</Link>

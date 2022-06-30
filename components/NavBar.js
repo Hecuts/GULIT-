@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { DataContext } from "../store/GlobalState";
 import Cookie from "js-cookie";
+import Filter from "./Filter";
 
 const NavBar = () => {
 	const router = useRouter();
@@ -48,7 +49,7 @@ const NavBar = () => {
 
 	const loggedRouter = () => {
 		return (
-			<li className="nav-item dropdown mx-2 ">
+			<li className="nav-item dropdown me-2 ">
 				<a
 					className="nav-link dropdown-toggle"
 					href="#"
@@ -77,7 +78,7 @@ const NavBar = () => {
 						<a className="dropdown-item">Profile</a>
 					</Link>
 					{auth.user.role === "admin" && adminRouter()}
-					<div className="dropdown-divider"></div>
+					<div className="dropdown-divider border-success"></div>
 					<button className="dropdown-item" onClick={handleLogout}>
 						Log out
 					</button>
@@ -90,8 +91,11 @@ const NavBar = () => {
 		<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div className="container-fluid">
 				<Link href="/">
-					<a className="navbar-brand">GulIT</a>
+					<a style={{ color: "#1ed760" }} className="navbar-brand">
+						GulIT
+					</a>
 				</Link>
+				{/* <Filter state={state} /> */}
 				<button
 					className="navbar-toggler"
 					type="button"
@@ -100,6 +104,7 @@ const NavBar = () => {
 					aria-controls="navbarNavDropdown"
 					aria-expanded="false"
 					aria-label="Toggle navigation"
+					style={{ borderColor: "#1ed760" }}
 				>
 					<span className="navbar-toggler-icon"></span>
 				</button>
@@ -126,11 +131,10 @@ const NavBar = () => {
 												padding: "3x 6px",
 												background: "green",
 												borderRadius: "50%",
-												top: "-10px",
-												right: "-10px",
+												top: "-13px",
+												right: "5px",
 												color: "white",
 												fontSize: "14px",
-												fontStyle: "normal",
 											}}
 										>
 											{cart.length}
@@ -140,6 +144,7 @@ const NavBar = () => {
 								</a>
 							</Link>
 						</li>
+						<hr className="mx-0 my-0" style={{ color: "#1ed760" }} />
 
 						{Object.keys(auth).length === 0 ? (
 							<li className="nav-item">
