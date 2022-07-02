@@ -2,7 +2,7 @@
 module.exports = {
 	// reactStrictMode: true,
 	env: {
-		BASE_URL: "http://localhost:3000",
+		BASE_URL: "gulit-eyzf4pm1s-hecuts.vercel.app",
 		MONGODB_URL:
 			"mongodb+srv://gulit:GulIT@cluster0.vqhro.mongodb.net/ecommerce?retryWrites=true&w=majority",
 		ACCESS_TOKEN_SECRET: "*T_^~#8AJzU[W>Y;Z!sN3Z_=)8T#{/S+/2.Jye&=p56rd3N!??",
