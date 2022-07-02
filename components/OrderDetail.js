@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import PaypalBtn from "./PaypalBtn";
+import PaypalBtn from "./paypalBtn";
 import { patchData } from "../utils/fetchData";
 import { updateItem } from "../store/Actions";
 
