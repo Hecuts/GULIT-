@@ -45,7 +45,7 @@ const DetailProduct = (props) => {
 					))}
 				</div>
 			</div>
-			<div className="col-md-6 mt-3">
+			<div className="mx-2 col-md-6 mt-3">
 				<h2 className="text-uppercase">{product.title}</h2>
 				<h5 className="text-danger">${product.price}</h5>
 

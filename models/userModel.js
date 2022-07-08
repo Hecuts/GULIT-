@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
 		avatar: {
 			type: String,
 			default:
-				"https://res.cloudinary.com/gulit/image/upload/v1655543024/gulit_media/okkt3xoxhcuxy6oyb8cx.jpg",
+				"https://res.cloudinary.com/gulit/image/upload/v1653569128/gulit_media/eamrmmy7stdagxd8nbws.jpg",
 		},
 	},
 	{
